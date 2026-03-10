@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="340" font-family="Arial">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="480" height="340" fill="#f8f9fa" rx="12"/>
+  <text x="240" y="26" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a1a2e">Атомарность — Всё или ничего</text>
+
+  <!-- BEGIN -->
+  <rect x="175" y="42" width="130" height="36" rx="8" fill="#4a90d9"/>
+  <text x="240" y="65" text-anchor="middle" font-size="20" font-weight="bold" fill="white">BEGIN</text>
+  <line x1="240" y1="78" x2="240" y2="100" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- INSERT ratings -->
+  <rect x="145" y="100" width="190" height="36" rx="8" fill="#4a90d9"/>
+  <text x="240" y="123" text-anchor="middle" font-size="18" fill="white">INSERT INTO ratings</text>
+  <line x1="240" y1="136" x2="240" y2="158" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- UPDATE movies -->
+  <rect x="145" y="158" width="190" height="36" rx="8" fill="#4a90d9"/>
+  <text x="240" y="181" text-anchor="middle" font-size="18" fill="white">UPDATE movies</text>
+  <line x1="240" y1="194" x2="240" y2="218" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Ромб -->
+  <polygon points="240,218 310,250 240,282 170,250" fill="#f5a623"/>
+  <text x="240" y="254" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Ошибка?</text>
+
+  <!-- Нет -> COMMIT -->
+  <line x1="170" y1="250" x2="95" y2="250" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="132" y="243" text-anchor="middle" font-size="16" fill="#333">Нет</text>
+  <rect x="22" y="232" width="73" height="36" rx="8" fill="#27ae60"/>
+  <text x="58" y="254" text-anchor="middle" font-size="18" font-weight="bold" fill="white">COMMIT</text>
+  <text x="58" y="300" text-anchor="middle" font-size="16" fill="#27ae60">✅ оба изменения</text>
+  <text x="58" y="314" text-anchor="middle" font-size="16" fill="#27ae60">применены</text>
+
+  <!-- Да -> ROLLBACK -->
+  <line x1="310" y1="250" x2="385" y2="250" stroke="#555" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="347" y="243" text-anchor="middle" font-size="16" fill="#333">Да</text>
+  <rect x="385" y="232" width="80" height="36" rx="8" fill="#e74c3c"/>
+  <text x="425" y="254" text-anchor="middle" font-size="18" font-weight="bold" fill="white">ROLLBACK</text>
+  <text x="425" y="300" text-anchor="middle" font-size="16" fill="#e74c3c">❌ оба изменения</text>
+  <text x="425" y="314" text-anchor="middle" font-size="16" fill="#e74c3c">отменены</text>
+</svg>

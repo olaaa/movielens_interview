@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="320" font-family="Arial">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="600" height="320" fill="#f8f9fa" rx="12"/>
+  <text x="300" y="24" text-anchor="middle" font-size="21" font-weight="bold" fill="#1a1a2e">Аномалия: Потерянное обновление (Lost Update)</text>
+
+  <!-- Колонки -->
+  <rect x="15" y="35" width="165" height="28" rx="6" fill="#4a90d9"/>
+  <text x="97" y="54" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Транзакция 1 (+0.5)</text>
+  <rect x="220" y="35" width="160" height="28" rx="6" fill="#34495e"/>
+  <text x="300" y="54" text-anchor="middle" font-size="18" font-weight="bold" fill="white">База данных</text>
+  <rect x="420" y="35" width="165" height="28" rx="6" fill="#8e44ad"/>
+  <text x="502" y="54" text-anchor="middle" font-size="18" font-weight="bold" fill="white">Транзакция 2 (+1.0)</text>
+
+  <!-- Линии времени -->
+  <line x1="97" y1="63" x2="97" y2="295" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="300" y1="63" x2="300" y2="295" stroke="#34495e" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="502" y1="63" x2="502" y2="295" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Оба читают rating=4.0 -->
+  <rect x="220" y="72" width="160" height="26" rx="5" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="300" y="89" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">rating = 4.0</text>
+
+  <line x1="220" y1="85" x2="180" y2="85" stroke="#4a90d9" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="15" y="72" width="165" height="26" rx="5" fill="#4a90d9" fill-opacity="0.1" stroke="#4a90d9"/>
+  <text x="97" y="89" text-anchor="middle" font-size="15" fill="#2c6fad">SELECT → читает 4.0</text>
+
+  <line x1="380" y1="110" x2="420" y2="110" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="420" y="97" width="165" height="26" rx="5" fill="#8e44ad" fill-opacity="0.1" stroke="#8e44ad"/>
+  <text x="502" y="114" text-anchor="middle" font-size="15" fill="#6c3483">SELECT → читает 4.0</text>
+
+  <!-- T1 UPDATE и COMMIT -->
+  <rect x="15" y="142" width="165" height="26" rx="5" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60"/>
+  <text x="97" y="159" text-anchor="middle" font-size="15" fill="#1e8449">UPDATE: 4.0+0.5=4.5 COMMIT</text>
+  <line x1="180" y1="155" x2="220" y2="155" stroke="#27ae60" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="220" y="142" width="160" height="26" rx="5" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60"/>
+  <text x="300" y="159" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e8449">rating = 4.5 ✅</text>
+
+  <!-- T2 UPDATE и COMMIT — перезаписывает! -->
+  <rect x="420" y="190" width="165" height="26" rx="5" fill="#e74c3c" fill-opacity="0.15" stroke="#e74c3c"/>
+  <text x="502" y="207" text-anchor="middle" font-size="15" fill="#c0392b">UPDATE: 4.0+1.0=5.0 COMMIT</text>
+  <line x1="420" y1="203" x2="380" y2="203" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="220" y="190" width="160" height="26" rx="5" fill="#e74c3c" fill-opacity="0.15" stroke="#e74c3c"/>
+  <text x="300" y="207" text-anchor="middle" font-size="16" font-weight="bold" fill="#c0392b">rating = 5.0 💥</text>
+
+  <!-- Итог -->
+  <rect x="15" y="250" width="570" height="22" rx="5" fill="#e74c3c" fill-opacity="0.08" stroke="#e74c3c"/>
+  <text x="300" y="265" text-anchor="middle" font-size="16" fill="#c0392b">💥 Обновление T1 потеряно! Должно быть 5.5, стало 5.0</text>
+
+  <rect x="15" y="280" width="570" height="22" rx="5" fill="#27ae60" fill-opacity="0.08" stroke="#27ae60"/>
+  <text x="300" y="295" text-anchor="middle" font-size="16" fill="#1e8449">✅ Защита: REPEATABLE READ (PG откатит T2) или SELECT FOR UPDATE (Блок 2)</text>
+</svg>
